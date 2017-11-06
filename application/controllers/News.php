@@ -1,5 +1,6 @@
 <?php
-class News extends CI_Controller {
+class News extends CI_Controller 
+{
 
         public function __construct()
         {
@@ -57,28 +58,44 @@ class News extends CI_Controller {
                 $this->load->view('news/success');
             }
         }
-        public function update($post_id)
+        public function update($post_id = NULL)
         {
-            $this->load->helper('form');
-            $this->load->library('form_validation');
-
-            $data['title'] = 'Update a news item';
-
-            $this->form_validation->set_rules('title', 'Title', 'required');
-            $this->form_validation->set_rules('text', 'Text', 'required');
-
-            if ($this->form_validation->run() === FALSE)
+            if ($post_id === NULL)
             {
-                $this->load->view('templates/header', $data);
-                $this->load->view('news/update');
-                $this->load->view('templates/footer');
-
+                echo "ERROR";
             }
             else
             {
-                $this->news_model->update_news();
-                $this->load->view('news/success');
+                $this->load->helper('form');
+                $this->load->library('form_validation');
+
+                $data['updated_data'] = $this->news_model->to_be_updated($post_id);
+
+                // all the line below should be inside this if block, later .....
+                if (empty($data['updated_data']))
+                {
+                    echo "ERROR IN QUERY - NO DATA EXISTS";
+                }
+                else
+                {
+                    $data['title'] = 'Update a news item';
+
+                    $this->form_validation->set_rules('title', 'Title', 'required');
+                    $this->form_validation->set_rules('text', 'Text', 'required');
+
+                    if ($this->form_validation->run() === FALSE)
+                    {
+                        $this->load->view('templates/header', $data);
+                        $this->load->view('news/update');
+                        $this->load->view('templates/footer');
+
+                    }
+                    else
+                    {
+                        $this->news_model->update_news();
+                        $this->load->view('news/success');
+                    }
+                }
             }
         }
-
 }
