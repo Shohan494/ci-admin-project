@@ -58,44 +58,48 @@ class News extends CI_Controller
                 $this->load->view('news/success');
             }
         }
-        public function update($post_id = NULL)
+        public function update($post_id)
         {
-            if ($post_id === NULL)
+            $this->load->helper('form');
+
+            $data['updated_data'] = $this->news_model->to_be_updated($post_id);
+
+            // all the line below should be inside this if block, later .....
+            if (empty($data['updated_data']))
             {
-                echo "ERROR";
+                echo "ERROR IN QUERY - NO DATA EXISTS";
             }
             else
             {
-                $this->load->helper('form');
-                $this->load->library('form_validation');
-
-                $data['updated_data'] = $this->news_model->to_be_updated($post_id);
-
-                // all the line below should be inside this if block, later .....
-                if (empty($data['updated_data']))
-                {
-                    echo "ERROR IN QUERY - NO DATA EXISTS";
-                }
-                else
-                {
-                    $data['title'] = 'Update a news item';
-
-                    $this->form_validation->set_rules('title', 'Title', 'required');
-                    $this->form_validation->set_rules('text', 'Text', 'required');
-
-                    if ($this->form_validation->run() === FALSE)
-                    {
-                        $this->load->view('templates/header', $data);
-                        $this->load->view('news/update');
-                        $this->load->view('templates/footer');
-
-                    }
-                    else
-                    {
-                        $this->news_model->update_news();
-                        $this->load->view('news/success');
-                    }
-                }
+                $data['title'] = 'Update a news item';
+                $this->load->view('templates/header', $data);
+                $this->load->view('news/update', $data);
+                $this->load->view('templates/footer');
             }
         }
+
+        public function updatedata()
+        {
+            $post_id = $this->input->post('id');
+            $data['updated_data'] = $this->news_model->to_be_updated($post_id);
+
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('title', 'Title', 'required');
+            $this->form_validation->set_rules('text', 'Text', 'required');
+
+            if ($this->form_validation->run() === FALSE)
+            {
+                $data['title'] = 'Update a news item';
+                $this->load->view('templates/header', $data);
+                $this->load->view('news/update/' + $post_id , $data);
+                $this->load->view('templates/footer');
+            }
+            else
+            {
+                $this->news_model->update_news($post_id);
+                //$this->load->view('news/success');
+            }
+        }
+
 }

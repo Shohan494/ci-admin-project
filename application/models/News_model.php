@@ -45,9 +45,10 @@ class News_model extends CI_Model {
 				        $query = $this->db->get_where('news', array('id' => $query_id));
 				        return $query->row_array();
 				}
-				
-				public function update_news()
+
+				public function update_news($query_id)
 				{
+						echo "query id: " + $query_id;
 				    $this->load->helper('url');
 
 				    $slug = url_title($this->input->post('title'), 'dash', TRUE);
@@ -59,7 +60,7 @@ class News_model extends CI_Model {
 				        'news_user_id' => $this->ion_auth->user()->row()->id
 				    );
 
-				    return $this->db->update('news', $data);
+						return $this->db->update('news', $data, array('id' => $query_id));
 				}
 
 }
