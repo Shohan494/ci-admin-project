@@ -37,7 +37,7 @@ class News2 extends CI_Controller
                 $data['title'] = 'Single News Page';
                 $this->load->view('templates/header', $data);
                 
-                $this->load->view('news2/view', $data);
+                $this->load->view('news/view', $data);
                 $this->load->view('templates/footer');
         }
         public function create()
@@ -53,14 +53,14 @@ class News2 extends CI_Controller
             if ($this->form_validation->run() === FALSE)
             {
                 $this->load->view('templates/header', $data);
-                $this->load->view('news2/create');
+                $this->load->view('news/create');
                 $this->load->view('templates/footer');
 
             }
             else
             {
                 $this->news_model->set_news();
-                $this->load->view('news2/success');
+                $this->load->view('news/message');
             }
         }
     public function edit()
