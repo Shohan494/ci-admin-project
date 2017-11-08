@@ -98,15 +98,15 @@ class News2 extends CI_Controller
     public function delete()
     {
         $id = $this->uri->segment(3);
+        $data['news_item'] = $this->news_model->get_news($id);
         
-        if (empty($id))
+        if (empty($id) || empty($data['news_item']))
         {
             show_404();
         }
-                
-        $news_item = $this->news_model->get_news_by_id($id);
-        
-        $this->news_model->delete_news($id);        
+
+        $this->news_model->delete_news($id);
+        $this->load->view('news/message');      
         redirect( base_url() . 'index.php/news2');        
     }
 

@@ -78,6 +78,11 @@ class News_model extends CI_Model {
 
 						return $this->db->update('news', $data, array('id' => $id));
 				}				
-
+		    
+		    public function delete_news($id)
+		    {
+		        $this->db->where('id', $id);
+		        return $this->db->delete('news');
+		    }
 }
 
