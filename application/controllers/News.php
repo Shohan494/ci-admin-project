@@ -8,6 +8,10 @@ class News extends CI_Controller
                 $this->load->library(array('ion_auth'));
                 $this->load->model('news_model');
                 $this->load->helper('url_helper');
+                if (!$this->ion_auth->logged_in())
+                {
+                    redirect('auth/login');
+                }
         }
 
         public function index()
