@@ -1,5 +1,5 @@
 <?php
-class News extends CI_Controller 
+class News2 extends CI_Controller 
 {
 
         public function __construct()
@@ -37,7 +37,7 @@ class News extends CI_Controller
                 $data['title'] = 'Single News Page';
                 $this->load->view('templates/header', $data);
                 
-                $this->load->view('news/view', $data);
+                $this->load->view('news2/view', $data);
                 $this->load->view('templates/footer');
         }
         public function create()
@@ -53,58 +53,61 @@ class News extends CI_Controller
             if ($this->form_validation->run() === FALSE)
             {
                 $this->load->view('templates/header', $data);
-                $this->load->view('news/create');
+                $this->load->view('news2/create');
                 $this->load->view('templates/footer');
 
             }
             else
             {
                 $this->news_model->set_news();
-                $this->load->view('news/success');
+                $this->load->view('news2/success');
             }
         }
-        public function update($post_id)
+    public function edit()
+    {
+        $id = $this->uri->segment(3);
+        $data['title'] = 'Edit a news item';        
+        $data['news_item'] = $this->news_model->get_news($id);
+        $data['id'] = $id;
+        
+        if (empty($id) || empty($data['news_item']))
         {
-            $this->load->helper('form');
-
-            $data['updated_data'] = $this->news_model->to_be_updated($post_id);
-
-            // all the line below should be inside this if block, later .....
-            if (empty($data['updated_data']))
-            {
-                echo "ERROR IN QUERY - NO DATA EXISTS";
-            }
-            else
-            {
-                $data['title'] = 'Update a news item';
-                $this->load->view('templates/header', $data);
-                $this->load->view('news/update', $data);
-                $this->load->view('templates/footer');
-            }
+            show_404();
         }
-
-        public function updatedata()
+        
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('text', 'Text', 'required');
+ 
+        if ($this->form_validation->run() === FALSE)
         {
-            $post_id = $this->input->post('id');
-            $data['updated_data'] = $this->news_model->to_be_updated($post_id);
-
-            $this->load->library('form_validation');
-
-            $this->form_validation->set_rules('title', 'Title', 'required');
-            $this->form_validation->set_rules('text', 'Text', 'required');
-
-            if ($this->form_validation->run() === FALSE)
-            {
-                $data['title'] = 'Update a news item';
-                $this->load->view('templates/header', $data);
-                $this->load->view('news/update/' + $post_id , $data);
-                $this->load->view('templates/footer');
-            }
-            else
-            {
-                $this->news_model->update_news($post_id);
-                //$this->load->view('news/success');
-            }
+            $this->load->view('templates/header', $data);
+            $this->load->view('news/edit', $data);
+            $this->load->view('templates/footer');
+ 
         }
+        else
+        {
+            $this->news_model->edit($id);
+            redirect( base_url() . 'index.php/news2');
+        }
+    }
+    
+    public function delete()
+    {
+        $id = $this->uri->segment(3);
+        
+        if (empty($id))
+        {
+            show_404();
+        }
+                
+        $news_item = $this->news_model->get_news_by_id($id);
+        
+        $this->news_model->delete_news($id);        
+        redirect( base_url() . 'index.php/news2');        
+    }
 
 }
