@@ -11,9 +11,13 @@
             <td><?php echo $news_item['text']; ?></td>
             <td>By user id: <?php echo $news_item['news_user_id']; ?></td>
             <td>
-                <a href="<?php echo site_url('news2/'.$news_item['id']); ?>">View</a> | 
-                <a href="<?php echo site_url('news2/edit/'.$news_item['id']); ?>">Edit</a> | 
+                <a href="<?php echo site_url('news2/'.$news_item['id']); ?>">View</a> |
+
+                <?php if( $news_item['news_user_id'] === $this->ion_auth->user()->row()->id): ?>
+                <a href="<?php echo site_url('news2/edit/'.$news_item['id']); ?>">Edit</a> |
                 <a href="<?php echo site_url('news2/delete/'.$news_item['id']); ?>" onClick="return confirm('Are you sure you want to delete?')">Delete</a>
+                <?php endif; ?>
+            
             </td>
         </tr>
 <?php endforeach; ?>
