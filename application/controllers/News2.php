@@ -70,7 +70,7 @@ class News2 extends CI_Controller
         $data['news_item'] = $this->news_model->get_news($id);
         $data['id'] = $id;
         
-        if (empty($id) || empty($data['news_item']))
+        if (empty($id) || empty($data['news_item']) || $data['news_item']['news_user_id'] !== $this->ion_auth->user()->row()->id)
         {
             show_404();
         }
@@ -100,7 +100,7 @@ class News2 extends CI_Controller
         $id = $this->uri->segment(3);
         $data['news_item'] = $this->news_model->get_news($id);
         
-        if (empty($id) || empty($data['news_item']))
+        if (empty($id) || empty($data['news_item']) || $data['news_item']['news_user_id'] !== $this->ion_auth->user()->row()->id)
         {
             show_404();
         }
