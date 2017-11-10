@@ -26,3 +26,4 @@
 <?php echo form_close();?>
 
 <p><a href="forgot_password"><?php echo lang('login_forgot_password');?></a></p>
+<p><a href="create_user_2">Create a new user</a></p>
