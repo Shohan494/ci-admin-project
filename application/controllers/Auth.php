@@ -62,6 +62,19 @@ class Auth extends CI_Controller
 		}
 	}
 
+	public function delete_user($id)
+	{
+		if ($this->ion_auth->is_admin())
+		{
+			$this->ion_auth->delete_user($id);
+			redirect('auth/index', 'refresh');
+		}
+		else
+		{
+			redirect('auth/login', 'refresh');
+		}
+	}
+
 	/**
 	 * Log the user in
 	 */

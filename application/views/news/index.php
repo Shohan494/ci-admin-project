@@ -1,4 +1,4 @@
-<table border='1' cellpadding='4'>
+<table border='1' cellpadding='5'>
     <tr>
         <td><strong>Title</strong></td>
         <td><strong>Content</strong></td>
