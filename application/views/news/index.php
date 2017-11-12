@@ -24,3 +24,5 @@
 </br>
 </table>
 </br>
+<?php echo anchor("auth/logout", 'Logout') ;?>
+</br></br>
