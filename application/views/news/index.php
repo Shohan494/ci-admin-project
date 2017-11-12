@@ -15,9 +15,9 @@
 
                 <?php if( $news_item['news_user_id'] === $this->ion_auth->user()->row()->id): ?>
                 <a href="<?php echo site_url('news2/edit/'.$news_item['id']); ?>">Edit</a> |
-                <a href="<?php echo site_url('news2/delete/'.$news_item['id']); ?>" onClick="return confirm('Are you sure you want to delete?')">Delete</a>
+                <a href="<?php echo site_url('news2/delete/'.$news_item['id']); ?>" onClick="return confirm('Are you sure you want to delete?')">Delete</a> |
                 <?php endif; ?>
-            
+                <a href="<?php echo site_url('comment/create/'.$news_item['id']); ?>">Comment</a>
             </td>
         </tr>
 <?php endforeach; ?>
