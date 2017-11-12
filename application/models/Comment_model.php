@@ -7,11 +7,23 @@ class Comment_model extends CI_Model {
                 $this->load->library(array('ion_auth'));
         }
 
-        public function get_comment($id)
+        public function get_comment($id = FALSE)
 				{
+				        if ($id === FALSE)
+				        {
+			                $query = $this->db->get('comment');
+			                return $query->result_array();
+				        }
+
 				        $query = $this->db->get_where('comment', array('id' => $id));
 				        return $query->row_array();
 				}
+
+        public function get_comment_by_news_id($id)
+				{
+				        $query = $this->db->get_where('comment', array('news_id' => $id));
+				        return $query->row_array();
+				}				
 
 				public function set_comment($id)
 				{

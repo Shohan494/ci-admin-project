@@ -9,7 +9,7 @@
         <tr>
             <td><?php echo $news_item['title']; ?></td>
             <td><?php echo $news_item['text']; ?></td>
-            <td>By user id: <?php echo $news_item['news_user_id']; ?></td>
+            <td>By User Id: <?php echo $news_item['news_user_id']; ?></td>
             <td>
                 <a href="<?php echo site_url('news2/'.$news_item['id']); ?>">View</a> |
 
@@ -24,5 +24,27 @@
 </br>
 </table>
 </br>
+</br>
+<table border='1' cellpadding='5'>
+    <tr>
+        <td><strong>Comment</strong></td>
+        <td><strong>News Id</strong></td>
+        <td><strong>Comment Writer Id</strong></td>
+        <td><strong>Action</strong></td>
+    </tr>
+<?php foreach ($comments as $comments_item): ?>
+        <tr>
+            <td><?php echo $comments_item['text']; ?></td>
+            <td><?php echo $comments_item['news_id']; ?></td>
+            <td>By User Id: <?php echo $comments_item['comment_user_id']; ?></td>
+            <td>
+                Blank for actions
+            </td>
+        </tr>
+<?php endforeach; ?>
+</br>
+</table>
+</br>
 <?php echo anchor("auth/logout", 'Logout') ;?>
 </br></br>
+

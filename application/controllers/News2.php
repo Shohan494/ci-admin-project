@@ -7,6 +7,7 @@ class News2 extends CI_Controller
                 parent::__construct();
                 $this->load->library(array('ion_auth'));
                 $this->load->model('news_model');
+                $this->load->model('comment_model');
                 $this->load->helper('url_helper');
                 if (!$this->ion_auth->logged_in())
                 {
@@ -17,6 +18,7 @@ class News2 extends CI_Controller
         public function index()
         {
                 $data['news'] = $this->news_model->get_news();
+                $data['comments'] = $this->comment_model->get_comment();
                 $data['title'] = 'News List';
 
                 $this->load->view('templates/header', $data);

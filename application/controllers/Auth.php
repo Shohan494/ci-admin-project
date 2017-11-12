@@ -21,6 +21,7 @@ class Auth extends CI_Controller
 
 		// you have to load the model in the construct function
 		$this->load->model('news_model');
+		$this->load->model('comment_model');
 	}
 
 	/**
@@ -40,6 +41,7 @@ class Auth extends CI_Controller
 			//return show_error('You must be an administrator to view this page.');
 
       $data['news'] = $this->news_model->get_news();
+      $data['comments'] = $this->comment_model->get_comment();
       $data['title'] = 'News archive';
 
       $this->load->view('templates/header', $data);
