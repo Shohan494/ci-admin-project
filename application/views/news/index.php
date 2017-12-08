@@ -1,9 +1,12 @@
+<strong><p>User id is : <?php echo $this->ion_auth->user()->row()->id; ?> </p></strong>
+
 <table border='1' cellpadding='5'>
     <tr>
         <td><strong>Title</strong></td>
         <td><strong>Content</strong></td>
         <td><strong>News Writer Id</strong></td>
         <td><strong>Action</strong></td>
+        <td><strong>LIKE/UNLIKE STATUS</strong></td>
     </tr>
 <?php foreach ($news as $news_item): ?>
         <tr>
@@ -19,6 +22,9 @@
                 <?php endif; ?>
                 <a href="<?php echo site_url('comment/create/'.$news_item['id']); ?>">Comment</a>
             </td>
+
+            <td>LIKE/UNLIKE STATUS</td>
+        
         </tr>
 <?php endforeach; ?>
 </br>
@@ -47,4 +53,15 @@
 </br>
 <?php echo anchor("auth/logout", 'Logout') ;?>
 </br></br>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+
+
+
 
